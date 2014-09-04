@@ -3,21 +3,19 @@
 #include <iostream>
 #include <locale>
 #include "player.h"
+#include "menutext.h"
 
 using namespace std;
 
-string const MENU_ONE = "1) New File\n2) Open File\n3) Quit\n";
-string const MENU_TWO = "1) Print all Players\n2) Create a new Player";
-
 Player createNewPlayer(int loc);
+int menuChoice(string displayText);
 void menuOne();
 void menuTwo();
-void modifyPlayer(Player pls[], int enteredPlayers, string name);
-void printPlayers(Player pls[], int enteredPlayers);
+
 int promptAge(int loc);
 int promptChoice();
 int promptIndex(int enteredPlayers);
-string promptName();
+string promptName(string prompt);
 string promptName(int loc);
 
 int main(){
@@ -36,31 +34,32 @@ Player createNewPlayer(int loc){
 	return pl;
 }
 
-void modifyPlayer(Player pls[], int enteredPlayers, string name){
-	for(int i = 0; i < enteredPlayers; i++){
-		if(pls[i].getName() == name){
-			// choice = 0 -> edit name
-			// choice = 1 -> edit age
-			int choice = promptChoice();
-			if(choice == 0){
-				pls[i].setName(promptName(i));
-			}
-			else if(choice == 1){
-				pls[i].setAge(promptAge(i));
-			}
-			return;
-		}
-	}
-	cout << "This player does not exist\n";
+int menuChoice(string displayText){
+	cout << displayText << "Select option: ";
+	int choice;
+	cin >> choice;
+	return choice;
 }
 
-void printPlayers(Player pls[], int enteredPlayers){
-	cout << "Printing:\n";
-	for(int i = 0; i < enteredPlayers; i++){
-		pls[i].print();
-		cout << "\n";
+void menuOne(){
+	bool invalid = false;
+	int choice;
+	do{
+		choice = menuChoice(MenuText::MENU_ONE);
+		if(choice < 1 || choice > 3){
+			invalid = true;
+			cout << MenuText::INVALID_MENU_CHOICE;
+		}
+	}while(invalid);
+	switch(choice){
+	case 1 : menuTwo();
+	case 2 : 
 	}
 }
+
+
+
+
 
 int promptAge(int loc){
 	cout << "Enter player " << loc << "'s age: ";
@@ -111,8 +110,8 @@ int promptIndex(int enteredPlayers){
 	return index;
 }
 
-string promptName(){
-	cout << "Enter a player's name: ";
+string promptName(string prompt){
+	cout << prompt;
 	string name;
 	cin >> name;
 	return name;
