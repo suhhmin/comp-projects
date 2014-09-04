@@ -1,3 +1,9 @@
+/*
+	Andre Allan Ponce
+	a_ponce1@u.pacific.edu
+	Header for Player class
+*/
+
 
 #include <string>
 
@@ -7,7 +13,7 @@ class Player{
 private:
 	string name;
 	int age;
-	bool validPlayer;
+	bool validPlayer; // invalid players will have "debug" name and negative age. these players 'don't exist' until replaced with 'real' Player. (ArrayLists (or vectors, in this case) could solve this)
 
 public:
 	Player();
@@ -19,7 +25,7 @@ public:
 	bool isValid();
 
 	void print();
-	void reset();
+	void reset(); // 'deletes' this player by setting name to "debug", age to -1, and validPlayer to false
 
 	void setAge(int a);
 	void setName(string n);
