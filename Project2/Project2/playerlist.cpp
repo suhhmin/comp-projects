@@ -7,15 +7,17 @@
 
 #include <string>
 #include <iostream>
-#include "playerlist.h"
 #include "player.h"
+#include "playerlist.h"
 
 using namespace std;
 
+// static variables have to be initialized
+// these are private, so they not global
 // @author Andre Allan Ponce
-void PlayerList::init(){
-	numberOfPlayers = 0;
-}
+int PlayerList::numberOfPlayers = 0;
+string PlayerList::fileName = "";
+Player PlayerList::players[20];
 
 // @author Andre Allan Ponce
 void PlayerList::addPlayer(Player pl){
@@ -54,7 +56,7 @@ void PlayerList::modifyPlayer(int loc, string newName){
 
 // @author Andre Allan Ponce
 void PlayerList::printPlayers(){
-	cout << "Printing:\n";
+	cout << "Printing:\n\n";
 	for(int i = 0; i < numberOfPlayers; i++){
 		if(players[i].isValid()){
 			players[i].print();

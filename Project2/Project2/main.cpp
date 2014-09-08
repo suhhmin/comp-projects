@@ -22,7 +22,7 @@ int menuChoice(string displayText);
 void menuOne();
 void menuTwo();
 string promptName(string prompt);
-void readInFile();
+bool readInFile();
 
 // these methods may be thrown out or modified extensively. do not use, yo
 Player createNewPlayer(int loc);
@@ -32,12 +32,11 @@ int promptIndex(int enteredPlayers);
 string promptName(int loc);
 
 int main(){
-	PlayerList::init();
-	/*Player players[NUMBER_OF_PLAYERS];
-	int index = promptIndex();
-	players[index] = createNewPlayer(index); // this was for lab2, yo
-	modifyPlayer(players, promptName());
-	printPlayers(players, NUMBER_OF_PLAYERS);*/
+	
+	// debug -------
+	menuOne();
+
+	// end debug -----
 	return 0;
 }
 
@@ -81,7 +80,11 @@ void menuOne(){
 		int choice = menuChoice(MenuText::MENU_ONE);
 		switch(choice){
 		case 1 : menuTwo(); break; // New File
-		case 2 : readInFile(); menuTwo(); break; // Open File
+		case 2 : // Open File
+			if(readInFile()){
+				menuTwo();
+			}
+			break;
 		case 3 : exit(0); break; // Quit
 		default : cout << MenuText::INVALID_MENU_CHOICE; break;
 		}
@@ -98,7 +101,7 @@ void menuTwo(){
 	while(isMenuTwo){
 		int choice = menuChoice(MenuText::MENU_TWO);
 		switch(choice){
-		case 1 :
+		case 1 : PlayerList::printPlayers(); break; // Print all players
 		case 2 :
 		case 3 :
 		case 4 :
@@ -182,20 +185,28 @@ string promptName(int loc){
 	Reads in file by prompting user for filename, opening file, 
 	getting the firstline (which should be number of players) and 
 	reading until file ends or we have reached number of players
+
+	NOTES:
+		- I swear, it seems that this block is rather lengthy and should be simplified, but I'm not sure how.
+
 	@author Andre Allan Ponce
+	@returns true if file was read perfectly, false if some error occured
 */
-void readInFile(){
+bool readInFile(){
 	ifstream inFile;
 	try{
 		string fileName = promptName(MenuText::PROMPT_FILE_NAME);
 		inFile.open(fileName.c_str()); // the book said to use cstrings for open() function
+		if(!inFile.good()){ 
+			throw MenuText::ERROR_FILE_NAME; // any starting I/O errors will be taken care of
+		}
 		string line;
 		getline(inFile, line); 
 		int playerNum = convertStringToNum(line);
 		if(playerNum <= 0 || playerNum >= 20){ // 0 or less should be impossible; we are to assume that 20 is max players
-			throw invalid_argument("First line of file is NaN"); // we can differientiate between I/O errors or bad file formatting
+			throw MenuText::ERROR_FILE_CONTENTS; // we can differientiate between I/O errors or bad file formatting
 		}
-		while(inFile.good()){ // good checks for eof, bad I/O or any other error with I/O
+		while(!inFile.eof()){ // changed to eof because serious I/O errors should throw automatically
 			getline(inFile, line);
 			string name = line;
 			getline(inFile, line);
@@ -203,11 +214,14 @@ void readInFile(){
 			Player pl(name, age); 
 			PlayerList::addPlayer(pl); // can we put Player(name, age) in here instead of creating pl? 
 		}
+		PlayerList::setFileName(fileName);
+		return true;
 	}
-	catch(invalid_argument& e){
-		cout << MenuText::ERROR_FILE_CONTENTS << e.what() << "\n"; // first line is NaN
+	catch(string text){
+		cout << text; // will display custom error message text
 	}
-	catch(ios_base::failure& e){
-		cout << MenuText::ERROR_FILE_NAME; // I/O errors (like file no exist)
+	catch(...){ // ... catches everything else, just in case
+		cout << MenuText::ERROR_UNKNOWN; // we dont know what happened, yo
 	}
+	return false;
 }

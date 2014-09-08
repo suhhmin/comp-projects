@@ -21,6 +21,9 @@
     <ClCompile Include="player.cpp" />
     <ClCompile Include="playerlist.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="sampleplayers" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{1B794218-F3BD-42A2-A52A-74CCE1815569}</ProjectGuid>
     <RootNamespace>Project2</RootNamespace>

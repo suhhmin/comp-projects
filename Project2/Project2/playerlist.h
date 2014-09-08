@@ -4,14 +4,14 @@
 	static class wrapper for an array of Player
 */
 #include <string>
-#include "player.h"
+
 using namespace std;
 
 class PlayerList{
 private:
 	static int numberOfPlayers; // should never go above 20, unless we start using vectors 
 	static string fileName; // this isn't like global variables, right?
-	static Player players[20];
+	static Player players[];
 
 public:
 	static void init(); // customary for me to create init(iation) methods for static classes

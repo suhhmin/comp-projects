@@ -4,7 +4,6 @@
 	Header for Player class
 */
 
-
 #include <string>
 
 using namespace std;
