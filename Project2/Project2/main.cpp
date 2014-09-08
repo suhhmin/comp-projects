@@ -1,8 +1,8 @@
 /*
 	Andre Allan Ponce
-	Steve (last name)
+	Steve Suh
 	a_ponce1@u.pacific.edu
-	s_(lastname)(#)@u.pacific.edu
+	h_suh@u.pacific.edu
 	Project2 main. Should be interactive with TWO menus
 */
 
@@ -77,21 +77,37 @@ int menuChoice(string displayText){
 	@author Andre Allan Ponce
 */
 void menuOne(){
-	bool invalid = false; // assume the worst
-	int choice;
-	do{
-		choice = menuChoice(MenuText::MENU_ONE);
-		if(choice < 1 || choice > 3){
-			invalid = true;
-			cout << MenuText::INVALID_MENU_CHOICE;
+	while(true){
+		int choice = menuChoice(MenuText::MENU_ONE);
+		switch(choice){
+		case 1 : menuTwo(); break; // New File
+		case 2 : readInFile(); menuTwo(); break; // Open File
+		case 3 : exit(0); break; // Quit
+		default : cout << MenuText::INVALID_MENU_CHOICE; break;
 		}
-	}while(invalid);
-	switch(choice){
-	case 1 : menuTwo(); break;
-	case 2 : 
 	}
 }
 
+/*
+	this is the second menu's interface
+	@author Andre Allan Ponce
+	(add yo name, steve)
+*/
+void menuTwo(){
+	bool isMenuTwo = true;
+	while(isMenuTwo){
+		int choice = menuChoice(MenuText::MENU_TWO);
+		switch(choice){
+		case 1 :
+		case 2 :
+		case 3 :
+		case 4 :
+		case 5 :
+		case 6 : isMenuTwo = false; break; // Close File
+		default : cout << MenuText::INVALID_MENU_CHOICE; break;
+		}
+	}
+}
 
 int promptAge(int loc){
 	cout << "Enter player " << loc << "'s age: ";
