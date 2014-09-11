@@ -6,28 +6,43 @@
 
 
 #include <string>
-#include <iostream>
+#include <sstream>
 #include "player.h"
 #include "playerlist.h"
 
 using namespace std;
 
-// static variables have to be initialized
-// these are private, so they not global
 // @author Andre Allan Ponce
-int PlayerList::numberOfPlayers = 0;
-string PlayerList::fileName = "";
-Player PlayerList::players[20];
+PlayerList::PlayerList() : numberOfPlayers(0), fileName(""), players(NULL){
+	// constructors should be empty, yo
+}
 
 // @author Andre Allan Ponce
-void PlayerList::addPlayer(Player pl){
-	players[numberOfPlayers++] = pl;
+PlayerList::PlayerList(int playerCount, string fName) : numberOfPlayers(playerCount), fileName(fName), players(new Player[playerCount]){
+	// constructors should be empty, yo
+}
+
+// @author Andre Allan Ponce
+PlayerList::~PlayerList(){
+	if(numberOfPlayers > 0){
+		delete [] players; // delete the list iff there is stuff in it
+	}
+}
+
+// @author Andre Allan Ponce
+void PlayerList::addPlayer(Player *pl){
+	players[numberOfPlayers++] = *pl;
+}
+
+// @author Andre Allan Ponce
+void PlayerList::createArray(int size){
+	players = new Player[size];
 }
 
 // @author Andre Allan Ponce
 int PlayerList::findPlayer(string name){
 	for(int i = 0; i < numberOfPlayers; i++){
-		if(players[i].isValid() && players[i].getName() == name){
+		if(players[i].getName() == name){
 			return i;
 		}
 	}
@@ -55,14 +70,12 @@ void PlayerList::modifyPlayer(int loc, string newName){
 }
 
 // @author Andre Allan Ponce
-void PlayerList::printPlayers(){
-	cout << "Printing:\n\n";
+string PlayerList::printPlayers(){
+	string thePlayers = "Printing:\n\n";
 	for(int i = 0; i < numberOfPlayers; i++){
-		if(players[i].isValid()){
-			players[i].print();
-			cout << "\n";
-		}
+		thePlayers += players[i].print() +"\n";
 	}
+	return thePlayers;
 }
 
 // @author Andre Allan Ponce

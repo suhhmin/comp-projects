@@ -5,23 +5,19 @@
 */
 
 #include <string>
-#include <iostream>
+#include <sstream> // converting ints to strings takes some work
 #include "player.h"
 
 using namespace std;
 
 // @author Andre Allan Ponce
-Player::Player(){
-	name = "debug";
-	age = -1;
-	validPlayer = false;
+Player::Player() : name("debug"), age(-1){
+	// constructors should be empty, yo
 }
 
 // @author Andre Allan Ponce
-Player::Player(string n, int a){
-	name = n;
-	age = a;
-	validPlayer = true;
+Player::Player(string n, int a) : name(n), age(a){
+	// constructors should be empty, yo
 }
 
 // @author Andre Allan Ponce
@@ -35,21 +31,11 @@ string Player::getName(){
 }
 
 // @author Andre Allan Ponce
-bool Player::isValid(){
-	return validPlayer;
-}
-
-// @author Andre Allan Ponce
-void Player::print(){
-	cout << "Name: " << name << "\n";
-	cout << "Age: " << age << "\n";
-}
-
-// @author Andre Allan Ponce
-void Player::reset(){
-	name = "debug";
-	age = -1;
-	validPlayer = false;
+string Player::print(){
+	ostringstream temp;
+	temp << age;
+	return "Name: "+name+"\n"
+		"Age: "+temp.str()+"\n";
 }
 
 // @author Andre Allan Ponce
@@ -60,9 +46,4 @@ void Player::setAge(int a){
 // @author Andre Allan Ponce
 void Player::setName(string n){
 	name = n;
-}
-
-// @author Andre Allan Ponce
-void Player::setValid(){
-	validPlayer = true;
 }

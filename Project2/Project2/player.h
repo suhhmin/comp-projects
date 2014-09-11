@@ -3,6 +3,8 @@
 	a_ponce1@u.pacific.edu
 	Header for Player class
 */
+#ifndef _PLAYER_H_INCLUDED_
+#define _PLAYER_H_INCLUDED_
 
 #include <string>
 
@@ -12,7 +14,6 @@ class Player{
 private:
 	string name;
 	int age;
-	bool validPlayer; // invalid players will have "debug" name and negative age. these players 'don't exist' until replaced with 'real' Player. (ArrayLists (or vectors, in this case) could solve this)
 
 public:
 	Player();
@@ -21,12 +22,10 @@ public:
 	int getAge();
 	string getName();
 
-	bool isValid();
-
-	void print();
-	void reset(); // 'deletes' this player by setting name to "debug", age to -1, and validPlayer to false
+	string print(); // return string, so we dont have include iostream everywhere
 
 	void setAge(int a);
 	void setName(string n);
-	void setValid();
 };
+
+#endif
