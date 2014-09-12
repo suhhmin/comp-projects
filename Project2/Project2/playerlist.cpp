@@ -31,7 +31,8 @@ PlayerList::~PlayerList(){
 
 // @author Andre Allan Ponce
 void PlayerList::addPlayer(Player *pl){
-	players[numberOfPlayers++] = *pl;
+	players[numberOfPlayers] = pl[0];
+	numberOfPlayers++;
 }
 
 // @author Andre Allan Ponce
@@ -67,6 +68,29 @@ void PlayerList::modifyPlayer(int loc, int newAge){
 // @author Andre Allan Ponce
 void PlayerList::modifyPlayer(int loc, string newName){
 	players[loc].setName(newName);
+}
+
+// Steve Suh
+void PlayerList::modifyPlayer(string playerName)
+{
+
+	if (findPlayer(playerName)!=-1)
+	{
+			players[findPlayer(playerName)].print();
+
+			cout<< "Modify this player's name if necessary:";
+			string newName;
+			cin >> newName;
+			players[findPlayer(playerName)].setName(newName);
+
+			cout<< "\nModify this player's age if necessary:";
+			int newAge;
+			cin >> newAge;
+			players[findPlayer(playerName)].setAge(newAge);
+
+	}
+	else
+		cout << "Invalid player name";
 }
 
 // @author Andre Allan Ponce

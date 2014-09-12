@@ -1,16 +1,21 @@
-﻿Build started 9/10/2014 9:04:10 PM.
-     1>Project "C:\Users\Potato\Documents\comp-projects\Project2\Project2\Project2.vcxproj" on node 2 (Build target(s)).
+﻿Build started 2014-09-12 오후 1:22:56.
+     1>Project "C:\Users\SENS\Documents\GitHub\comp-projects\Project2\Project2\Project2.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp playerlist.cpp
+         playerlist.cpp
+     1>c:\users\sens\documents\github\comp-projects\project2\project2\playerlist.cpp(75): error C2511: 'void PlayerList::modifyPlayer(std::string)' : overloaded member function not found in 'PlayerList'
+                 c:\users\sens\documents\github\comp-projects\project2\project2\playerlist.h(12) : see declaration of 'PlayerList'
          main.cpp
-       Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Potato\Documents\comp-projects\Project2\Debug\Project2.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Potato\Documents\comp-projects\Project2\Debug\Project2.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Potato\Documents\comp-projects\Project2\Debug\Project2.lib" /MACHINE:X86 Debug\constants.obj
-         Debug\main.obj
-         Debug\player.obj
-         Debug\playerlist.obj
-         Project2.vcxproj -> C:\Users\Potato\Documents\comp-projects\Project2\Debug\Project2.exe
-     1>Done Building Project "C:\Users\Potato\Documents\comp-projects\Project2\Project2\Project2.vcxproj" (Build target(s)).
+     1>c:\users\sens\documents\github\comp-projects\project2\project2\main.cpp(58): error C2664: 'promptAge' : cannot convert parameter 1 from 'const char [6]' to 'int'
+                 There is no context in which this conversion is possible
+     1>c:\users\sens\documents\github\comp-projects\project2\project2\main.cpp(159): error C2664: 'PlayerList::addPlayer' : cannot convert parameter 1 from 'Player' to 'Player *'
+                 No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
+     1>c:\users\sens\documents\github\comp-projects\project2\project2\main.cpp(163): error C2664: 'PlayerList::addPlayer' : cannot convert parameter 1 from 'Player' to 'Player *'
+                 No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
+     1>c:\users\sens\documents\github\comp-projects\project2\project2\main.cpp(167): error C2661: 'PlayerList::modifyPlayer' : no overloaded function takes 1 arguments
+         Generating Code...
+     1>Done Building Project "C:\Users\SENS\Documents\GitHub\comp-projects\Project2\Project2\Project2.vcxproj" (Build target(s)) -- FAILED.
 
-Build succeeded.
+Build FAILED.
 
-Time Elapsed 00:00:03.34
+Time Elapsed 00:00:01.62

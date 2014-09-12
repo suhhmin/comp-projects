@@ -11,6 +11,7 @@
 #include <fstream>
 #include <iostream>
 #include <locale>
+#include <random>
 #include "player.h"
 #include "playerlist.h"
 #include "menutext.h"
@@ -51,11 +52,48 @@ int convertStringToNum(string num){
 	return playerNum;
 }
 
-Player createNewPlayer(int loc){
-	Player pl;
-	pl.setName(promptName(loc));
-	pl.setAge(promptAge(loc));
-	return pl;
+Player createNewPlayer(){
+	Player *pl;
+	pl->setName(promptName("Name: "));
+	pl->setAge(promptAge("Age: "));
+	return *pl;
+}
+
+Player createRandomPlayer()
+{
+	string playerNames[20] ={"Jason",
+							"Jack",
+							"John",
+							"Joseph",
+							"Job",
+
+							"Jonathan",
+							"James",
+							"Jim",
+							"Josh",
+							"Jay",
+
+							"Jose",
+							"Johnson",
+							"Jimmy",
+							"Jake",
+							"Jeff",
+
+							"Jorge",
+							"Joy",
+							"JiaLingXu",
+							"Jeremy",
+							"Joshua"};
+
+		random_device rd; //a random, large number like 32248906489
+		Player *rdpl;
+		int ranNum = rd()%20;	// a random number between 0~19
+		rdpl->setName(playerNames[ranNum]);//setting the name randomly picked from an arbitrary list
+		rdpl->setAge(10 + ranNum);//setting age randomly between 10~29
+		cout<<"Generated a player."
+			<<"\nName: " << playerNames[ranNum]
+			<<"\nAge  : " << 10+ranNum;
+		return *rdpl;
 }
 
 /*
@@ -106,7 +144,7 @@ void menuOne(){
 /*
 	this is the second menu's interface
 	@author Andre Allan Ponce
-	(add yo name, steve)
+	Steve Suh
 */
 void menuTwo(PlayerList* pList){
 	bool isMenuTwo = true;
@@ -117,14 +155,17 @@ void menuTwo(PlayerList* pList){
 			cout << pList->printPlayers();
 			break;
 		}
-		case 2 : {
-
+		case 2 : { // Create a new player!
+			pList->addPlayer(createNewPlayer()); 
+			break;
 		}
-		case 3 : {
-
+		case 3 : { // Generate a random player and add.
+			pList->addPlayer(createRandomPlayer());  
+			break;
 		}
-		case 4 : {
-
+		case 4 : { // Modify a player's name/Age!
+			pList->modifyPlayer(promptName("player name: ")); 
+			break; 
 		}
 		case 5 : {
 
