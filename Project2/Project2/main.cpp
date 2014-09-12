@@ -20,9 +20,9 @@ using namespace std;
 int convertStringToNum(string num);  
 int menuChoice(string displayText);
 void menuOne();
-void menuTwo();
+void menuTwo(PlayerList* pList);
 string promptName(string prompt);
-bool readInFile();
+bool readInFile(PlayerList* pList);
 
 // these methods may be thrown out or modified extensively. do not use, yo
 Player createNewPlayer(int loc);
@@ -79,14 +79,26 @@ void menuOne(){
 	while(true){
 		int choice = menuChoice(MenuText::MENU_ONE);
 		switch(choice){
-		case 1 : menuTwo(); break; // New File
-		case 2 : // Open File
-			if(readInFile()){
-				menuTwo();
+		case 1 : { // New File
+			PlayerList *pList = &PlayerList();
+			menuTwo(pList);
+			break;
+		}
+		case 2 : { // Open File
+			PlayerList *pList = &PlayerList();
+			if(readInFile(pList)){
+				menuTwo(pList);
 			}
 			break;
-		case 3 : exit(0); break; // Quit
-		default : cout << MenuText::INVALID_MENU_CHOICE; break;
+		}
+		case 3 : { // Exit
+			exit(0);
+			break;
+		}
+		default : { // Bad Menu choice
+			cout << MenuText::INVALID_MENU_CHOICE;
+			break;
+		}
 		}
 	}
 }
@@ -96,18 +108,35 @@ void menuOne(){
 	@author Andre Allan Ponce
 	(add yo name, steve)
 */
-void menuTwo(){
+void menuTwo(PlayerList* pList){
 	bool isMenuTwo = true;
 	while(isMenuTwo){
 		int choice = menuChoice(MenuText::MENU_TWO);
 		switch(choice){
-		case 1 : PlayerList::printPlayers(); break; // Print all players
-		case 2 :
-		case 3 :
-		case 4 :
-		case 5 :
-		case 6 : isMenuTwo = false; break; // Close File
-		default : cout << MenuText::INVALID_MENU_CHOICE; break;
+		case 1 : { // Print all players
+			cout << pList->printPlayers();
+			break;
+		}
+		case 2 : {
+
+		}
+		case 3 : {
+
+		}
+		case 4 : {
+
+		}
+		case 5 : {
+
+		}
+		case 6 : { // Close File
+			isMenuTwo = false;
+			break;
+		}
+		default : { // bad menu choice
+			cout << MenuText::INVALID_MENU_CHOICE;
+			break;
+		}
 		}
 	}
 }
@@ -192,7 +221,7 @@ string promptName(int loc){
 	@author Andre Allan Ponce
 	@returns true if file was read perfectly, false if some error occured
 */
-bool readInFile(){
+bool readInFile(PlayerList* pList){
 	ifstream inFile;
 	try{
 		string fileName = promptName(MenuText::PROMPT_FILE_NAME);
@@ -200,21 +229,24 @@ bool readInFile(){
 		if(!inFile.good()){ 
 			throw MenuText::ERROR_FILE_NAME; // any starting I/O errors will be taken care of
 		}
+		// cout << "filenamecheckgood\n"; // debug
 		string line;
 		getline(inFile, line); 
 		int playerNum = convertStringToNum(line);
 		if(playerNum <= 0 || playerNum >= 20){ // 0 or less should be impossible; we are to assume that 20 is max players
 			throw MenuText::ERROR_FILE_CONTENTS; // we can differientiate between I/O errors or bad file formatting
 		}
+		pList->createArray(playerNum);
+		// cout << "filecontentsgood\n"; // debug
 		while(!inFile.eof()){ // changed to eof because serious I/O errors should throw automatically
 			getline(inFile, line);
 			string name = line;
 			getline(inFile, line);
 			int age = convertStringToNum(line);
-			Player pl(name, age); 
-			PlayerList::addPlayer(pl); // can we put Player(name, age) in here instead of creating pl? 
+			pList->addPlayer(&Player(name, age)); // pointers, yo 
+			// cout << "addingplayers\n"; // debug
 		}
-		PlayerList::setFileName(fileName);
+		pList->setFileName(fileName);
 		return true;
 	}
 	catch(string text){
