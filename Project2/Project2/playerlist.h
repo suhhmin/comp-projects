@@ -2,6 +2,7 @@
 	Andre Allan Ponce
 	a_ponce1@u.pacific.edu
 	no longer static class wrapper for an array of Player
+	Steve Suh
 */
 #include <string>
 
@@ -9,13 +10,15 @@ class Player; // foward declaration: http://www.cplusplus.com/forum/articles/106
 
 using namespace std;
 
-class PlayerList{
+class PlayerList
+{
 private:
 	int numberOfPlayers; // now it can go above 20
 	string fileName; 
 	Player *players;
 
 public:
+
 	PlayerList();
 	PlayerList(int playerCount, string fName); // unused right now
 
@@ -28,9 +31,11 @@ public:
 
 	string getFileName();
 	int getNumberOfPlayers();
+	Player getPlayer(int num);
 
 	void modifyPlayer(int loc, int newAge);		// for either option, yo
 	void modifyPlayer(int loc, string newName);	// since I try to keep all I/O in main (or in a File wrapper class)
+	void modifyPlayer(string playerName);
 	string printPlayers(); // return string, so we dont have include iostream everywhere				
 
 	void setFileName(string name);
