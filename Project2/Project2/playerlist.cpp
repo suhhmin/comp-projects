@@ -40,6 +40,14 @@ void PlayerList::createArray(int size){
 }
 
 // @author Andre Allan Ponce
+bool PlayerList::doesFileExist(){
+	if(fileName == ""){
+		return false;
+	}
+	return true;
+}
+
+// @author Andre Allan Ponce
 int PlayerList::findPlayer(string name){
 	for(int i = 0; i < numberOfPlayers; i++){
 		if(players[i].getName() == name){

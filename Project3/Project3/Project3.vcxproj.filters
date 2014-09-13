@@ -35,5 +35,14 @@
     <ClInclude Include="playerlist.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="playeritem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="roomitem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="item.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
