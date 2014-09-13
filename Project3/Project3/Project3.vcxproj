@@ -64,9 +64,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="attic.cpp" />
+    <ClCompile Include="bathroom.cpp" />
+    <ClCompile Include="bedroom.cpp" />
     <ClCompile Include="constants.cpp" />
+    <ClCompile Include="diningroom.cpp" />
+    <ClCompile Include="hallway.cpp" />
+    <ClCompile Include="kitchen.cpp" />
+    <ClCompile Include="livingroom.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="playerlist.cpp" />
+    <ClCompile Include="startingroom.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="menutext.h" />
