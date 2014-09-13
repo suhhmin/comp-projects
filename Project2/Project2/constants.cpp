@@ -28,6 +28,7 @@ const string MenuText::MENU_TWO = "\n"
 						"4) Modify a Player\n"
 						"5) Save Player list\n"
 						"6) Close File\n";
+const string MenuText::MENU_CHOICE = "Select option: ";
 
 /* 
 	Prompt text
@@ -43,3 +44,10 @@ const string MenuText::PROMPT_PLAYER_NAME = "\nEnter a player's name: ";
 const string MenuText::ERROR_FILE_NAME = "\nCannot read file\n";
 const string MenuText::ERROR_FILE_CONTENTS = "\nFile corrupted\n";
 const string MenuText::ERROR_UNKNOWN = "\nUnknown error occured\n";
+
+/*
+	Other menu text
+	@author Andre Allan Ponce
+*/
+const string MenuText::SAVING = "\nSaving existing File\n";
+const string MenuText::SAVING_SUCCESS = "\nFile saved successfully!\n";

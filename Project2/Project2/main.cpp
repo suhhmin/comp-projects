@@ -19,28 +19,19 @@
 
 using namespace std;
 
+Player createNewPlayer(int loc);
 int convertStringToNum(string num);  
 int menuChoice(string displayText);
 void menuOne();
 void menuTwo(PlayerList* pList);
+void modifyPlayer(PlayerList* pList, string playerName);
+int promptAge(string loc);
 string promptName(string prompt);
 bool readInFile(PlayerList* pList);
 void saveFile(PlayerList* pList);
 
-// these methods may be thrown out or modified extensively. do not use, yo
-Player createNewPlayer(int loc);
-int promptAge(string loc);
-
-int promptChoice();
-int promptIndex(int enteredPlayers);
-string promptName(int loc);
-
 int main(){
-	
-	// debug -------
-	menuOne();
-
-	// end debug -----
+	menuOne(); // efficiency!
 	return 0;
 }
 
@@ -55,6 +46,7 @@ int convertStringToNum(string num){
 	return playerNum;
 }
 
+// Steve suh
 Player createNewPlayer(){
 	Player pl;
 	pl.setName(promptName("Name: "));
@@ -108,7 +100,7 @@ Player createRandomPlayer()
 	@returns the choice the user made, which should be an int.
 */
 int menuChoice(string displayText){
-	cout << displayText << "Select option: ";
+	cout << displayText << MenuText::MENU_CHOICE;
 	string choice; 
 	cin >> choice;
 	return convertStringToNum(choice); // by doing this, we can say invalid input is 0! (if user puts in NaN...)
@@ -116,6 +108,7 @@ int menuChoice(string displayText){
 
 /*
 	this is the first menu's interface
+	runs forever until user enters 3, manually closes program, or presses the power button.
 	@author Andre Allan Ponce
 */
 void menuOne(){
@@ -156,6 +149,7 @@ void menuTwo(PlayerList* pList){
 	bool isMenuTwo = true;
 	while(isMenuTwo){
 		int choice = menuChoice(MenuText::MENU_TWO);
+		cout << pList->getNumberOfPlayers();
 		switch(choice){
 		case 1 : { // Print all players
 			cout << pList->printPlayers();
@@ -170,15 +164,15 @@ void menuTwo(PlayerList* pList){
 			break;
 		}
 		case 4 : { // Modify a player's name/Age!
-			pList->modifyPlayer(promptName("player name: ")); 
+			modifyPlayer(pList,promptName(MenuText::PROMPT_PLAYER_NAME)); 
 			break; 
 		}
 		case 5 : { // Save the data into a file
 			saveFile(pList);
 			break;
-
 		}
 		case 6 : { // Close File
+			pList->deleteArray();
 			isMenuTwo = false;
 			break;
 		}
@@ -190,53 +184,36 @@ void menuTwo(PlayerList* pList){
 	}
 }
 
+// Steve suh
+void modifyPlayer(PlayerList* pList, string playerName)
+{
+
+	if (pList->findPlayer(playerName)!=-1)
+	{
+			int x= pList->findPlayer(playerName);
+			pList->getPlayer(x)->print();
+
+			cout<< "Modify this player's name if necessary:";
+			string newName;
+			cin >> newName;
+			pList->getPlayer(x)->setName(newName);
+
+			cout<< "\nModify this player's age if necessary:";
+			int newAge;
+			cin >> newAge;
+			pList->getPlayer(x)->setAge(newAge);
+
+	}
+	else
+		cout << "Invalid player name";
+}
+
+// Steve suh
 int promptAge(string loc){
-	cout << "Enter player " << loc << "'s age: ";
+	cout << loc;
 	int age;
 	cin >> age;
 	return age;
-}
-
-/*
-	prompt user for choice
-	@return 0 if editing name, 1 if editing age
-*/
-int promptChoice(){
-	bool invalid;
-	do{
-		cout << "Which value to edit? (N/a): ";
-		char input;
-		cin >> input;
-		input = toupper(input);
-		if(input == 'N'){
-			return 0;
-		}
-		else if(input == 'A'){
-			return 1;
-		}
-		else{
-			invalid = true;
-			cout << "Input invalid, type 'N' for Name, 'a' for age.\n";
-		}
-	}while(invalid);
-	return -1; // we shouldnt be going here
-}
-
-int promptIndex(int enteredPlayers){
-	int index;
-	bool invalid;
-	do{
-		cout << "Choose an index to create a player [0," << enteredPlayers-1 << "]: ";
-		cin >> index;
-		if(index < 0 || index >= enteredPlayers){
-			invalid = true;
-			cout << "Invalid index, try again.\n";
-		}
-		else{
-			invalid = false;
-		}
-	}while(invalid);
-	return index;
 }
 
 /*
@@ -247,13 +224,6 @@ int promptIndex(int enteredPlayers){
 */
 string promptName(string prompt){
 	cout << prompt;
-	string name;
-	cin >> name;
-	return name;
-}
-
-string promptName(int loc){
-	cout << "Enter player " << loc << "'s name: ";
 	string name;
 	cin >> name;
 	return name;
@@ -278,7 +248,7 @@ bool readInFile(PlayerList* pList){
 		if(!inFile.good()){ 
 			throw MenuText::ERROR_FILE_NAME; // any starting I/O errors will be taken care of
 		}
-		 cout << "filenamecheckgood\n"; // debug
+		// cout << "filenamecheckgood\n"; // debug
 		string line;
 		getline(inFile, line); 
 		int playerNum = convertStringToNum(line);
@@ -286,14 +256,14 @@ bool readInFile(PlayerList* pList){
 			throw MenuText::ERROR_FILE_CONTENTS; // we can differientiate between I/O errors or bad file formatting
 		}
 		pList->createArray(playerNum);
-		 cout << "filecontentsgood\n"; // debug
+		// cout << "filecontentsgood\n"; // debug
 		while(!inFile.eof()){ // changed to eof because serious I/O errors should throw automatically
 			getline(inFile, line);
 			string name = line;
 			getline(inFile, line);
 			int age = convertStringToNum(line);
 			pList->addPlayer(&Player(name, age)); // pointers, yo 
-			 cout << "addingplayers\n"; // debug
+			// cout << "addingplayers\n"; // debug
 		}
 		pList->setFileName(fileName);
 		inFile.close();
@@ -314,20 +284,23 @@ void saveFile(PlayerList* pList)
 {
 	ostringstream tempor;
 	tempor << pList -> getNumberOfPlayers();
-	string resultString = tempor.str()+"\n";
-
-
+	string resultString = tempor.str();
 		for(int i=0;i<pList -> getNumberOfPlayers();i++)
 		{
-			
 			ostringstream tem;
-			tem << pList->getPlayer(i).getAge();
-			resultString += pList->getPlayer(i).getName()+"\n" + tem.str() + "\n";
+			tem << pList->getPlayer(i)->getAge();
+			resultString += "\n"+pList->getPlayer(i)->getName()+"\n" + tem.str() ;
 		}
-
-		ofstream outFile (promptName(MenuText::PROMPT_FILE_NAME).c_str(), ofstream::out);
-		
+		string fileName;
+		if(pList->doesFileExist()){
+			fileName = pList->getFileName();
+			cout << MenuText::SAVING;
+		}
+		else{
+			fileName = promptName(MenuText::PROMPT_FILE_NAME);
+		}
+		ofstream outFile (fileName.c_str(), ofstream::out);
 		outFile << resultString;
-
 		outFile.close();
+		cout << MenuText::SAVING_SUCCESS;
 }

@@ -4,8 +4,6 @@
 	header for menu text
 */
 
-#include <string>
-
 using namespace std;
 
 class MenuText{

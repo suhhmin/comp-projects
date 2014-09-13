@@ -3,7 +3,6 @@
 	a_ponce1@u.pacific.edu
 	no longer static class wrapper for an array of Player
 */
-#include <string>
 
 class Player; // foward declaration: http://www.cplusplus.com/forum/articles/10627/#msg49679
 

@@ -7,7 +7,6 @@
 
 #include <string>
 #include <sstream>
-#include <iostream>
 #include "player.h"
 #include "playerlist.h"
 
@@ -24,21 +23,29 @@ PlayerList::PlayerList(int playerCount, string fName) : numberOfPlayers(playerCo
 }
 
 // @author Andre Allan Ponce
-PlayerList::~PlayerList(){
-	if(numberOfPlayers > 0){
-		delete [] players; // delete the list iff there is stuff in it
-	}
-}
-
-// @author Andre Allan Ponce
 void PlayerList::addPlayer(Player *pl){
-	players[numberOfPlayers] = pl[0];
-	numberOfPlayers++;
+	players[numberOfPlayers++] = *pl;
 }
 
 // @author Andre Allan Ponce
 void PlayerList::createArray(int size){
 	players = new Player[size];
+}
+
+// @author Andre Allan Ponce
+void PlayerList::deleteArray(){
+	if(numberOfPlayers > 0){
+		// cout << "zeroing test";
+		delete [] players; // delete the list iff there is stuff in it
+	}
+}
+
+// @author Andre Allan Ponce
+bool PlayerList::doesFileExist(){
+	if(fileName == ""){
+		return false;
+	}
+	return true;
 }
 
 // @author Andre Allan Ponce
@@ -62,44 +69,9 @@ int PlayerList::getNumberOfPlayers(){
 }
 
 // Steve Suh
-Player PlayerList::getPlayer(int num)
+Player* PlayerList::getPlayer(int num)
 {
-	return players[num];
-}
-
-
-// @author Andre Allan Ponce
-void PlayerList::modifyPlayer(int loc, int newAge){
-	players[loc].setAge(newAge);
-}
-
-// @author Andre Allan Ponce
-void PlayerList::modifyPlayer(int loc, string newName){
-	players[loc].setName(newName);
-}
-
-// Steve Suh
-void PlayerList::modifyPlayer(string playerName)
-{
-
-	if (findPlayer(playerName)!=-1)
-	{
-			int x= findPlayer(playerName);
-			players[x].print();
-
-			cout<< "Modify this player's name if necessary:";
-			string newName;
-			cin >> newName;
-			players[x].setName(newName);
-
-			cout<< "\nModify this player's age if necessary:";
-			int newAge;
-			cin >> newAge;
-			players[x].setAge(newAge);
-
-	}
-	else
-		cout << "Invalid player name";
+	return &players[num];
 }
 
 // @author Andre Allan Ponce
