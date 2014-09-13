@@ -5,19 +5,19 @@
 */
 #ifndef _PLAYERITEM_H_INCLUDED_
 #define _PLAYERITEM_H_INCLUDED_
-#include <string>
 
-class PlayerItem{
-private:
-	std::string name;
+class PlayerItem : public Item{
+protected:
+	int id;
 
 public:
 	PlayerItem();
+	PlayerItem(std::string n, int idNumber);
 
 	virtual void action() = 0;
 
-	std::string getItemName();
+	int getID();
 
-	void setItemName(std::string n);
+	void setID(int idNumber);
 };
 #endif

@@ -65,8 +65,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="constants.cpp" />
+    <ClCompile Include="item.cpp" />
     <ClCompile Include="player.cpp" />
+    <ClCompile Include="playeritem.cpp" />
     <ClCompile Include="playerlist.cpp" />
+    <ClCompile Include="roomitem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="item.h" />

@@ -5,18 +5,25 @@
 */
 
 #include <string>
+#include "player.h"
 #include "menutext.h"
+
+/*
+	Player inventory amount
+	@author Andre Allan Ponce
+*/
+const int Player::INVENTORY_MAX = 40;
 
 /* 
 	Error for menu choice 
 	@author Andre Allan Ponce
-*/
+
 const string MenuText::INVALID_MENU_CHOICE = "\nInvalid choice.\n";
 
 /* 
 	Menu Text 
 	@author Andre Allan Ponce
-*/
+
 const string MenuText::MENU_ONE = "\n"
 						"1) New File\n"
 						"2) Open File\n"
@@ -32,14 +39,15 @@ const string MenuText::MENU_TWO = "\n"
 /* 
 	Prompt text
 	@author Andre Allan Ponce
-*/
+
 const string MenuText::PROMPT_FILE_NAME = "\nEnter a filename: ";
 const string MenuText::PROMPT_PLAYER_NAME = "\nEnter a player's name: ";
 
 /* 
 	Error Messages
 	@author Andre Allan Ponce
-*/
+
 const string MenuText::ERROR_FILE_NAME = "\nCannot read file\n";
 const string MenuText::ERROR_FILE_CONTENTS = "\nFile corrupted\n";
 const string MenuText::ERROR_UNKNOWN = "\nUnknown error occured\n";
+*/
