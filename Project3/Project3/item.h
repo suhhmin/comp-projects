@@ -6,14 +6,13 @@
 #ifndef _ITEM_H_INCLUDED_
 #define _ITEM_H_INCLUDED
 
-#include <string>
-
 class Item{
 protected:
 	std::string name;
 
 public:
 	Item();
+	Item(std::string n);
 
 	virtual void action() = 0;
 
@@ -21,6 +20,4 @@ public:
 
 	void setItemName(std::string n);
 };
-
-
 #endif

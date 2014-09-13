@@ -6,17 +6,11 @@
 #ifndef _ROOMITEM_H_INCLUDED_
 #define _ROOMITEM_H_INCLUDED_
 
-#include <string>
-
-class RoomItem{
-private:
-	std::string name;
-
+class RoomItem : public Item{
 public:
 	RoomItem();
+	RoomItem(std::string n);
 
-	virtual void action();
-
-
+	virtual void action() = 0;
 };
 #endif
