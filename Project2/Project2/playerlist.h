@@ -26,6 +26,7 @@ public:
 
 	void addPlayer(Player *pl);
 	void createArray(int size);
+	bool doesFileExist();
 	int findPlayer(string name);
 
 	string getFileName();

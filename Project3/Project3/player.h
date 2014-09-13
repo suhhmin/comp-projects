@@ -13,7 +13,7 @@ using namespace std;
 class Player{
 private:
 	string name;
-	int age;
+	static const int INVENTORY_MAX;
 
 public:
 	Player();
