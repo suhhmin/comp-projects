@@ -7,6 +7,7 @@
 
 #include <string>
 #include <sstream>
+#include <iostream>
 #include "player.h"
 #include "playerlist.h"
 
@@ -60,6 +61,13 @@ int PlayerList::getNumberOfPlayers(){
 	return numberOfPlayers;
 }
 
+// Steve Suh
+Player PlayerList::getPlayer(int num)
+{
+	return players[num];
+}
+
+
 // @author Andre Allan Ponce
 void PlayerList::modifyPlayer(int loc, int newAge){
 	players[loc].setAge(newAge);
@@ -76,17 +84,18 @@ void PlayerList::modifyPlayer(string playerName)
 
 	if (findPlayer(playerName)!=-1)
 	{
-			players[findPlayer(playerName)].print();
+			int x= findPlayer(playerName);
+			players[x].print();
 
 			cout<< "Modify this player's name if necessary:";
 			string newName;
 			cin >> newName;
-			players[findPlayer(playerName)].setName(newName);
+			players[x].setName(newName);
 
 			cout<< "\nModify this player's age if necessary:";
 			int newAge;
 			cin >> newAge;
-			players[findPlayer(playerName)].setAge(newAge);
+			players[x].setAge(newAge);
 
 	}
 	else

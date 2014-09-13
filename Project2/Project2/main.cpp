@@ -11,6 +11,7 @@
 #include <fstream>
 #include <iostream>
 #include <locale>
+#include <sstream>
 #include <random>
 #include "player.h"
 #include "playerlist.h"
@@ -24,10 +25,12 @@ void menuOne();
 void menuTwo(PlayerList* pList);
 string promptName(string prompt);
 bool readInFile(PlayerList* pList);
+void saveFile(PlayerList* pList);
 
 // these methods may be thrown out or modified extensively. do not use, yo
 Player createNewPlayer(int loc);
-int promptAge(int loc);
+int promptAge(string loc);
+
 int promptChoice();
 int promptIndex(int enteredPlayers);
 string promptName(int loc);
@@ -53,10 +56,11 @@ int convertStringToNum(string num){
 }
 
 Player createNewPlayer(){
-	Player *pl;
-	pl->setName(promptName("Name: "));
-	pl->setAge(promptAge("Age: "));
-	return *pl;
+	Player pl;
+	pl.setName(promptName("Name: "));
+	pl.setAge(promptAge("Age: "));
+	cout << "\n";
+	return pl;
 }
 
 Player createRandomPlayer()
@@ -86,14 +90,15 @@ Player createRandomPlayer()
 							"Joshua"};
 
 		random_device rd; //a random, large number like 32248906489
-		Player *rdpl;
+		Player rdpl;
 		int ranNum = rd()%20;	// a random number between 0~19
-		rdpl->setName(playerNames[ranNum]);//setting the name randomly picked from an arbitrary list
-		rdpl->setAge(10 + ranNum);//setting age randomly between 10~29
+		rdpl.setName(playerNames[ranNum]);//setting the name randomly picked from an arbitrary list
+		rdpl.setAge(10 + ranNum);//setting age randomly between 10~29
 		cout<<"Generated a player."
 			<<"\nName: " << playerNames[ranNum]
-			<<"\nAge  : " << 10+ranNum;
-		return *rdpl;
+			<<"\nAge  : " << 10+ranNum 
+			<<"\n";
+		return rdpl;
 }
 
 /*
@@ -119,6 +124,7 @@ void menuOne(){
 		switch(choice){
 		case 1 : { // New File
 			PlayerList *pList = &PlayerList();
+			pList->createArray(20);
 			menuTwo(pList);
 			break;
 		}
@@ -156,18 +162,20 @@ void menuTwo(PlayerList* pList){
 			break;
 		}
 		case 2 : { // Create a new player!
-			pList->addPlayer(createNewPlayer()); 
+			pList->addPlayer(&createNewPlayer()); 
 			break;
 		}
 		case 3 : { // Generate a random player and add.
-			pList->addPlayer(createRandomPlayer());  
+			pList->addPlayer(&createRandomPlayer());  
 			break;
 		}
 		case 4 : { // Modify a player's name/Age!
 			pList->modifyPlayer(promptName("player name: ")); 
 			break; 
 		}
-		case 5 : {
+		case 5 : { // Save the data into a file
+			saveFile(pList);
+			break;
 
 		}
 		case 6 : { // Close File
@@ -182,7 +190,7 @@ void menuTwo(PlayerList* pList){
 	}
 }
 
-int promptAge(int loc){
+int promptAge(string loc){
 	cout << "Enter player " << loc << "'s age: ";
 	int age;
 	cin >> age;
@@ -270,7 +278,7 @@ bool readInFile(PlayerList* pList){
 		if(!inFile.good()){ 
 			throw MenuText::ERROR_FILE_NAME; // any starting I/O errors will be taken care of
 		}
-		// cout << "filenamecheckgood\n"; // debug
+		 cout << "filenamecheckgood\n"; // debug
 		string line;
 		getline(inFile, line); 
 		int playerNum = convertStringToNum(line);
@@ -278,16 +286,17 @@ bool readInFile(PlayerList* pList){
 			throw MenuText::ERROR_FILE_CONTENTS; // we can differientiate between I/O errors or bad file formatting
 		}
 		pList->createArray(playerNum);
-		// cout << "filecontentsgood\n"; // debug
+		 cout << "filecontentsgood\n"; // debug
 		while(!inFile.eof()){ // changed to eof because serious I/O errors should throw automatically
 			getline(inFile, line);
 			string name = line;
 			getline(inFile, line);
 			int age = convertStringToNum(line);
 			pList->addPlayer(&Player(name, age)); // pointers, yo 
-			// cout << "addingplayers\n"; // debug
+			 cout << "addingplayers\n"; // debug
 		}
 		pList->setFileName(fileName);
+		inFile.close();
 		return true;
 	}
 	catch(string text){
@@ -296,5 +305,29 @@ bool readInFile(PlayerList* pList){
 	catch(...){ // ... catches everything else, just in case
 		cout << MenuText::ERROR_UNKNOWN; // we dont know what happened, yo
 	}
+	inFile.close();
 	return false;
+}
+
+//Steve Suh
+void saveFile(PlayerList* pList)
+{
+	ostringstream tempor;
+	tempor << pList -> getNumberOfPlayers();
+	string resultString = tempor.str()+"\n";
+
+
+		for(int i=0;i<pList -> getNumberOfPlayers();i++)
+		{
+			
+			ostringstream tem;
+			tem << pList->getPlayer(i).getAge();
+			resultString += pList->getPlayer(i).getName()+"\n" + tem.str() + "\n";
+		}
+
+		ofstream outFile (promptName(MenuText::PROMPT_FILE_NAME).c_str(), ofstream::out);
+		
+		outFile << resultString;
+
+		outFile.close();
 }
