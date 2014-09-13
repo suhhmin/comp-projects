@@ -6,8 +6,6 @@
 #ifndef _PLAYER_H_INCLUDED_
 #define _PLAYER_H_INCLUDED_
 
-#include <string>
-
 using namespace std;
 
 class Player{

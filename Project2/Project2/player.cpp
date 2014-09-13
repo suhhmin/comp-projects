@@ -6,7 +6,7 @@
 
 #include <string>
 #include <sstream> // converting ints to strings takes some work
-#include <iostream>
+//#include <iostream>
 #include "player.h"
 
 using namespace std;
